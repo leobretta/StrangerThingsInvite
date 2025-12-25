@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>For Brae 🎄</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(135deg, #5a030d, #1b1f3b);
+      font-family: 'Segoe UI', sans-serif;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .card {
+      max-width: 500px;
+      padding: 40px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      box-shadow: 0 0 40px rgba(0,0,0,0.4);
+      animation: fadeIn 1.2s ease;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    p {
+      font-size: 1.1em;
+      line-height: 1.6;
+    }
+
+    button {
+      margin-top: 30px;
+      padding: 12px 26px;
+      font-size: 1em;
+      border: none;
+      border-radius: 25px;
+      background: #e50914;
+      color: white;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(229, 9, 20, 0.4);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card" id="step1">
+    <h1>Merry Christmas, Brae!!! 🎄</h1>
+    <p>
+      I wanted to get you a present this year but couldn't think of what to get you<br><br>
+      So I thought of something you and I have in common
+    </p>
+    <button onclick="nextStep()">Continue</button>
+  </div>
+
+  <div class="card hidden" id="step2">
+    <h1>I know we both love Stranger Things</h1>
+    <p>
+      And we're both dying to see Delightful Derek turn into Destroyer Derek<br>
+      Well I thought of a great gift and idea to watch the finale
+    </p>
+    <button onclick="nextStep()">Okay 👀</button>
+  </div>
+
+  <div class="card hidden" id="step3">
+    <h1>🎬 STRANGER THINGS 🎬</h1>
+    <p>
+      The finale.<br>
+      In theaters.<br><br>
+      And I have <strong>two tickets</strong>.
+    </p>
+    <button onclick="nextStep()">NO WAY👀</button>
+  </div>
+
+  <div class="card hidden" id="step4">
+    <h1>One is yours.</h1>
+    <p>
+      The other…<br>
+      I was hoping you’d go with me ❤️
+    </p>
+    <p style="margin-top: 20px; font-size: 0.95em; opacity: 0.85;">
+      If not totally fine - just thought it'd be fun <br>
+      to see it in theaters together
+    </p>
+    <button onclick="nextStep()">Okay...</button>
+  </div>
+
+  <div class="card hidden" id="step5">
+    <h1>I have tickets for the following:</h1>
+    <p>Day: January 1st <br>
+        Time: 7:00pm <br>
+        Place: Majestic Cinema of Omaha
+    </p>
+  </div>
+  <script>
+    let current = 1;
+
+    function nextStep() {
+      document.getElementById(`step${current}`).classList.add("hidden");
+      current++;
+      document.getElementById(`step${current}`).classList.remove("hidden");
+    }
+  </script>
+
+</body>
+</html>
