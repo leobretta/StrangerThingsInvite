@@ -6,6 +6,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
 
+    .demogorgon {
+  position: fixed;
+  width: 90px;
+  opacity: 0.12;
+  pointer-events: none;
+  z-index: 0;
+  filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.4));
+}
+
+
     #flashOverlay {
   position: fixed;
   top: 0;
@@ -216,7 +226,6 @@
     <p>Place: Majestic Cinema of Omaha</p>
     <p>Also I got two $20 food and beverage vouchers so we don't even have to pay for concessions either.</p>
     <img src="Tickets.png" alt="Screenshot of Tickets" class="photo">
-    <button onclick="nextStep()">Next</button>
   </div>
 
   <script>
@@ -267,6 +276,7 @@
       lightningStarted = true;
       snowInterval = setInterval(createSnowflake, 25);
       triggerFlash();
+      spawnDemogorgons();
       lightningInterval = setInterval(triggerFlash, 7000);
     }
 
@@ -324,14 +334,55 @@
       thunder.play();
     }
 
-    function flashBackground() {
+   function flashBackground() {
   const flash = document.getElementById("flashOverlay");
   flash.style.opacity = "1";
 
-  setTimeout(() => {
-    flash.style.opacity = "0";
-  }, 120);
+  setTimeout(() => flash.style.opacity = "0", 80);
+  setTimeout(() => flash.style.opacity = "0.6", 120);
+  setTimeout(() => flash.style.opacity = "0", 200);
 }
+
+const demoCount = 4; // number of faces
+const demogorgons = [];
+
+function spawnDemogorgons() {
+  for (let i = 0; i < demoCount; i++) {
+    const img = document.createElement("img");
+    img.src = "demohead.png"; // <-- your image
+    img.className = "demogorgon";
+
+    const size = 70 + Math.random() * 50;
+    img.style.width = size + "px";
+
+    const x = Math.random() * (window.innerWidth - size);
+    const y = Math.random() * (window.innerHeight - size);
+
+    const dx = (Math.random() * 0.6 + 0.2) * (Math.random() < 0.5 ? -1 : 1);
+    const dy = (Math.random() * 0.6 + 0.2) * (Math.random() < 0.5 ? -1 : 1);
+
+    document.body.appendChild(img);
+
+    demogorgons.push({ img, x, y, dx, dy, size });
+  }
+
+  requestAnimationFrame(moveDemogorgons);
+}
+
+function moveDemogorgons() {
+  demogorgons.forEach(d => {
+    d.x += d.dx;
+    d.y += d.dy;
+
+    if (d.x <= 0 || d.x + d.size >= window.innerWidth) d.dx *= -1;
+    if (d.y <= 0 || d.y + d.size >= window.innerHeight) d.dy *= -1;
+
+    d.img.style.transform = `translate(${d.x}px, ${d.y}px)`;
+  });
+
+  requestAnimationFrame(moveDemogorgons);
+}
+
 
   </script>
 </body>
