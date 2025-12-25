@@ -150,7 +150,7 @@
   <audio id="bgMusic" loop>
     <source src="music.mp3" type="audio/mpeg">
   </audio>
-  
+
   <div id="lightning"></div>
   <div id="snow"></div>
 
@@ -208,22 +208,32 @@
     </p>
   </div>
   <script>
+    const music = document.getElementById("bgMusic");
+    let musicStarted = false;
     let current = 1;
     let lightningStarted = false;
     let lightningInterval = null;
     let snowInterval = null;
   
     function nextStep() {
+      // Start music on first interaction
+      if (!musicStarted) {
+        music.volume = 0.35; // subtle
+        music.play();
+        musicStarted = true;
+      }
+    
       document.getElementById(`step${current}`).classList.add("hidden");
       current++;
       document.getElementById(`step${current}`).classList.remove("hidden");
-  
-      // Start effects ONLY when tickets are revealed (step 3)
+    
       if (current === 3 && !lightningStarted) {
         startEffects();
       }
     }
-  
+    
+
+
     const lightning = document.getElementById("lightning");
     const snow = document.getElementById("snow");
   
