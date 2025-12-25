@@ -34,6 +34,8 @@
       40%  { opacity: 0.8; }
       60%  { opacity: 0.2; }
       100% { opacity: 0; }
+
+      
     }
     
     body {
@@ -104,11 +106,49 @@
       margin: 20px auto;
       display: block;
     }
+
+    #snow {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+    
+    .snowflake {
+      position: absolute;
+      top: -10px;
+      width: 3px;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 50%;
+      animation-name: fall;
+      animation-timing-function: linear;
+    }
+    
+    @keyframes fall {
+      from {
+        transform: translateY(0);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      to {
+        transform: translateY(110vh);
+        opacity: 0;
+      }
+    }
+    
   </style>
 </head>
 <body>
 
   <div id="lightning"></div>
+  <div id="snow"></div>
 
   <div class="card" id="step1">
     <h1>Merry Christmas, Brae!!! 🎄</h1>
@@ -164,42 +204,58 @@
     </p>
   </div>
   <script>
-      let current = 1;
-      let lightningStarted = false;
-      let lightningInterval = null;
-    
-      function nextStep() {
-        // Hide current step
-        document.getElementById(`step${current}`).classList.add("hidden");
-        current++;
-    
-        // Show next step
-        document.getElementById(`step${current}`).classList.remove("hidden");
-    
-        // Start lightning ONLY when tickets are revealed (step 3)
-        if (current === 3 && !lightningStarted) {
-          startLightning();
-        }
+    let current = 1;
+    let lightningStarted = false;
+    let lightningInterval = null;
+    let snowInterval = null;
+  
+    function nextStep() {
+      document.getElementById(`step${current}`).classList.add("hidden");
+      current++;
+      document.getElementById(`step${current}`).classList.remove("hidden");
+  
+      // Start effects ONLY when tickets are revealed (step 3)
+      if (current === 3 && !lightningStarted) {
+        startEffects();
       }
-    
-      const lightning = document.getElementById("lightning");
-    
-      function startLightning() {
-        lightningStarted = true;
-    
-        // Initial dramatic flash
-        triggerFlash();
-    
-        // Repeat every 7 seconds
-        lightningInterval = setInterval(triggerFlash, 7000);
-      }
-    
-      function triggerFlash() {
-        lightning.classList.remove("lightning-flash");
-        void lightning.offsetWidth; // reset animation
-        lightning.classList.add("lightning-flash");
-      }
-    </script>
-
+    }
+  
+    const lightning = document.getElementById("lightning");
+    const snow = document.getElementById("snow");
+  
+    function startEffects() {
+      lightningStarted = true;
+  
+      // Lightning
+      triggerFlash();
+      lightningInterval = setInterval(triggerFlash, 7000);
+  
+      // Snow / ash
+      snowInterval = setInterval(createSnowflake, 300);
+    }
+  
+    function triggerFlash() {
+      lightning.classList.remove("lightning-flash");
+      void lightning.offsetWidth;
+      lightning.classList.add("lightning-flash");
+    }
+  
+    function createSnowflake() {
+      const flake = document.createElement("div");
+      flake.classList.add("snowflake");
+  
+      flake.style.left = Math.random() * 100 + "vw";
+      flake.style.animationDuration = 6 + Math.random() * 6 + "s";
+      flake.style.opacity = Math.random();
+  
+      snow.appendChild(flake);
+  
+      // Remove when finished
+      setTimeout(() => {
+        flake.remove();
+      }, 12000);
+    }
+  </script>
+  
 </body>
 </html>
