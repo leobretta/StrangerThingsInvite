@@ -164,22 +164,42 @@
     </p>
   </div>
   <script>
-    let current = 1;
-
-  function nextStep() {
-    document.getElementById(`step${current}`).classList.add("hidden");
-    current++;
-    document.getElementById(`step${current}`).classList.remove("hidden");
-  }
-
-  const lightning = document.getElementById("lightning");
-
-  setInterval(() => {
-    lightning.classList.remove("lightning-flash");
-    void lightning.offsetWidth; // reset animation
-    lightning.classList.add("lightning-flash");
-  }, 7000);
-  </script>
+      let current = 1;
+      let lightningStarted = false;
+      let lightningInterval = null;
+    
+      function nextStep() {
+        // Hide current step
+        document.getElementById(`step${current}`).classList.add("hidden");
+        current++;
+    
+        // Show next step
+        document.getElementById(`step${current}`).classList.remove("hidden");
+    
+        // Start lightning ONLY when tickets are revealed (step 3)
+        if (current === 3 && !lightningStarted) {
+          startLightning();
+        }
+      }
+    
+      const lightning = document.getElementById("lightning");
+    
+      function startLightning() {
+        lightningStarted = true;
+    
+        // Initial dramatic flash
+        triggerFlash();
+    
+        // Repeat every 7 seconds
+        lightningInterval = setInterval(triggerFlash, 7000);
+      }
+    
+      function triggerFlash() {
+        lightning.classList.remove("lightning-flash");
+        void lightning.offsetWidth; // reset animation
+        lightning.classList.add("lightning-flash");
+      }
+    </script>
 
 </body>
 </html>
