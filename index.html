@@ -163,7 +163,7 @@
       top: -10px;
       width: 3px;
       height: 3px;
-      background: rgba(255, 255, 255, 0.8);
+      background: rgba(255, 200, 200, 0.7);
       border-radius: 50%;
       animation-name: fall;
       animation-timing-function: linear;
@@ -186,7 +186,7 @@
   </style>
 </head>
 <body>
-
+  <audio id="thunder" src="thunder.mp3" preload="auto"></audio>
   <audio id="bgMusic" loop>
     <source src="music.mp3" type="audio/mpeg">
   </audio>
@@ -341,6 +341,18 @@
 
   // Remove bolt after animation
   setTimeout(() => bolt.remove(), 600);
+
+  if (Math.random() < 0.5) { // 50% chance for each bolt
+  setTimeout(playThunder, 75 + Math.random() * 50); // small delay for realism
+}
+
+
+}
+
+function playThunder() {
+  const thunder = new Audio("thunder.mp3"); // create a new instance
+  thunder.volume = 0.15 + Math.random() * 0.1; // subtle randomness
+  thunder.play();
 }
 
   
