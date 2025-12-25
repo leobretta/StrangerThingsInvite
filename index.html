@@ -5,14 +5,13 @@
   <title>Christmas Present For Brae 🎄</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-
-
+    /* Bolt styling */
     .bolt {
       position: fixed;
       top: 0;
       left: 0;
-      width: 20px; /* will scale with transform */
-      height: 150px; /* typical bolt height */
+      width: 20px;
+      height: 150px;
       background: linear-gradient(to bottom, #ff0000, #880000);
       clip-path: polygon(
         50% 0%, 55% 10%, 45% 20%, 55% 30%, 45% 40%, 
@@ -37,38 +36,6 @@
       100% { opacity: 0; transform: scaleY(1); }
     }
 
-    #lightning {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: radial-gradient(
-        circle at center,
-        rgba(255, 0, 0, 0.35),
-        rgba(120, 0, 0, 0.15),
-        rgba(0, 0, 0, 0)
-      );
-      opacity: 0;
-      pointer-events: none;
-      z-index: 0;
-    }
-    
-    .lightning-flash {
-      animation: flash 0.6s ease;
-    }
-    
-    @keyframes flash {
-      0%   { opacity: 0; }
-      10%  { opacity: 0.9; }
-      25%  { opacity: 0.3; }
-      40%  { opacity: 0.8; }
-      60%  { opacity: 0.2; }
-      100% { opacity: 0; }
-
-      
-    }
-    
     body {
       margin: 0;
       height: 100vh;
@@ -86,6 +53,7 @@
       z-index: 2;
       max-width: 500px;
       padding: 40px;
+      padding-bottom: 80px;
       background: rgba(255, 255, 255, 0.08);
       border-radius: 16px;
       box-shadow: 0 0 40px rgba(0,0,0,0.4);
@@ -97,26 +65,24 @@
       font-weight: 600;
     }
 
-    p {
-      font-size: 1.1em;
-      line-height: 1.6;
-    }
-
-    button {
-      margin-top: 30px;
+    .card button {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
       padding: 12px 26px;
       font-size: 1em;
-      border: none;
       border-radius: 25px;
       background: #e50914;
       color: white;
       cursor: pointer;
       transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 6px 15px rgba(229, 9, 20, 0.4);
     }
 
-    button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 15px rgba(229, 9, 20, 0.4);
+    .card button:hover {
+      transform: translateX(-50%) translateY(-2px);
+      box-shadow: 0 6px 15px rgba(229, 9, 20, 0.6);
     }
 
     .hidden {
@@ -131,19 +97,30 @@
     .photo {
       width: 100%;
       max-width: 260px;
-      height: 360px;        /* ⬅️ forces crop */
-      object-fit: cover;   /* ⬅️ prevents stretching */
+      height: 360px;
+      object-fit: cover;
       border-radius: 14px;
       margin: 20px auto;
       display: block;
     }
+
     .photo2 {
       width: 100%;
       max-width: 150px;
-      height: 240px;        /* ⬅️ forces crop */
-      object-fit: cover;   /* ⬅️ prevents stretching */
+      height: 240px;
+      object-fit: cover;
       border-radius: 14px;
       margin: 0px auto;
+      display: block;
+    }
+
+    .photo3 {
+      width: 100%;
+      max-width: 800px;
+      height: 600px;
+      object-fit: cover;
+      border-radius: 14px;
+      margin: 20px auto;
       display: block;
     }
 
@@ -157,7 +134,7 @@
       z-index: 1;
       overflow: hidden;
     }
-    
+
     .snowflake {
       position: absolute;
       top: -10px;
@@ -168,221 +145,168 @@
       animation-name: fall;
       animation-timing-function: linear;
     }
-    
+
     @keyframes fall {
-      from {
-        transform: translateY(0);
-        opacity: 0;
-      }
-      10% {
-        opacity: 1;
-      }
-      to {
-        transform: translateY(110vh);
-        opacity: 0;
-      }
+      from { transform: translateY(0); opacity: 0; }
+      10% { opacity: 1; }
+      to { transform: translateY(110vh); opacity: 0; }
     }
-    
   </style>
 </head>
 <body>
-  <audio id="thunder" src="thunder.mp3" preload="auto"></audio>
   <audio id="bgMusic" loop>
     <source src="music.mp3" type="audio/mpeg">
   </audio>
-
-  <div id="lightning"></div>
   <div id="snow"></div>
 
+  <!-- Step 1 -->
   <div class="card" id="step1">
     <h1>Merry Christmas, Brae!!! 🎄</h1>
     <img src="dogchristmas.jpg" alt="Pibble Christmas" class="photo2">
-    <p>
-      I wanted to get you a present this year but couldn't think of what to get you<br><br>
-      So I thought of something you and I have in common
-    </p>
+    <p>I wanted to get you a present this year but couldn't think of what to get you.</p>
+    <p>So I thought of something you and I have in common.</p>
     <button onclick="nextStep()">Continue</button>
   </div>
 
+  <!-- Step 2 -->
   <div class="card hidden" id="step2">
     <h1>I know we both love Stranger Things</h1>
     <img src="DerekS5.webp" alt="Delightful Derek" class="photo">
-    <p>
-      And we're both dying to see Delightful Derek turn into Destroyer Derek<br>
-      Well I thought of a great gift and idea to watch the finale
-    </p>
+    <p>And we're both dying to see Delightful Derek turn into Destroyer Derek.</p>
+    <p>Well I thought of a great gift and idea to watch the finale.</p>
     <button onclick="nextStep()">Okay 👀</button>
   </div>
 
+  <!-- Step 3 -->
   <div class="card hidden" id="step3">
-    <h1>🎬 STRANGER THINGS 🎬</h1>
-    <p>
-      The finale.<br>
-      In theaters.<br><br>
-      And I have <strong>two tickets</strong>.
-    </p>
+    <h1> STRANGER THINGS FINALE</h1>
+    <p>In theaters.</p>
+    <p>And I have two tickets.</p>
+    <img src="elcinema.jpeg" alt="El Absolute Cinema" class="photo3">
     <button onclick="nextStep()">NO WAY👀</button>
   </div>
 
+  <!-- Step 4 -->
   <div class="card hidden" id="step4">
-    <h1>I would love it if you'd to go with me.</h1>
-    <p>
-    </p>
+    <h1>I would love it if you'd go with me.</h1>
     <img src="no-way.png" alt="No Way Meme Cat" class="photo">
-    <p style="margin-top: 20px; font-size: 0.95em; opacity: 0.85;">
-      We'd just have to avoid spoilers for 24 hours😏
-    </p>
+    <p>We'd just have to avoid spoilers for 24 hours 😏</p>
     <button onclick="nextStep()">Sounds Fun!😎</button>
   </div>
 
+  <!-- Step 5 -->
   <div class="card hidden" id="step5">
     <h1>I have tickets for the following:</h1>
-    <p>Day: January 1st <br>
-        Time: 7:00pm <br>
-        Place: Majestic Cinema of Omaha
-    </p>
+    <p>Day: January 1st</p>
+    <p>Time: 7:00pm</p>
+    <p>Place: Majestic Cinema of Omaha</p>
+    <p>Also I got two $20 food and beverage vouchers so we don't even have to pay for concessions either.</p>
     <img src="Tickets.png" alt="Screenshot of Tickets" class="photo">
-    <p style="margin-top: 20px; font-size: 0.95em; opacity: 0.85;">
-        Also I got two $20 food and beverage vouchers so we 
-        dont even have to pay for concessions either
-    </p>
+    <button onclick="nextStep()">Next</button>
   </div>
+
   <script>
-    const music = document.getElementById("bgMusic");
     let musicStarted = false;
     let current = 1;
     let lightningStarted = false;
     let lightningInterval = null;
     let snowInterval = null;
-  
+    const snow = document.getElementById("snow");
+
     function nextStep() {
-      // Start music on first interaction
       if (!musicStarted) {
-        music.volume = 0.35; // subtle
+        const music = document.getElementById("bgMusic");
         music.volume = 0;
         music.play();
-
         let vol = 0;
         const fadeIn = setInterval(() => {
           vol += 0.02;
           music.volume = Math.min(vol, 0.35);
           if (vol >= 0.35) clearInterval(fadeIn);
         }, 100);
-
         musicStarted = true;
       }
-    
+
       document.getElementById(`step${current}`).classList.add("hidden");
       current++;
-      document.getElementById(`step${current}`).classList.remove("hidden");
-    
+      const stepEl = document.getElementById(`step${current}`);
+      stepEl.classList.remove("hidden");
+
       if (current === 3 && !lightningStarted) {
         startEffects();
       }
     }
-    
 
-
-    const lightning = document.getElementById("lightning");
-    const snow = document.getElementById("snow");
-  
-    function startEffects() {
-      lightningStarted = true;
-  
-      // Lightning
-      triggerFlash();
-      lightningInterval = setInterval(triggerFlash, 7000);
-  
-      // Snow / ash
-      snowInterval = setInterval(createSnowflake, 25);
-    }
-
-    function createBolt() {
-  const boltHeight = 500 + Math.random() * 150; // 200px - 350px
-  const boltWidth = 40; // width of the bolt
-
-  const bolt = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-  bolt.setAttribute("width", boltWidth);
-  bolt.setAttribute("height", boltHeight);
-  bolt.style.position = "fixed";
-  bolt.style.pointerEvents = "none";
-  bolt.style.top = (Math.random() * 45 + 5) + "vh"; // top half
-  bolt.style.left = (Math.random() * 80 + 10) + "vw"; // horizontal
-  bolt.style.zIndex = "0";
-  bolt.style.opacity = "0";
-
-  const rotation = Math.random() * 40 - 20; // -20° to +20°
-  bolt.style.transform = `rotate(${rotation}deg)`;
-
-  // Jagged path relative to height
-  const step = boltHeight / 5;
-  const pathD = `M${boltWidth/2} 0 L${boltWidth/4} ${step} L${boltWidth*3/4} ${step*2} L${boltWidth/4} ${step*3} L${boltWidth*3/4} ${step*4} L${boltWidth/2} ${boltHeight}`;
-
-  const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-  path.setAttribute("d", pathD);
-  path.setAttribute("stroke", "red");
-  path.setAttribute("stroke-width", "3");
-  path.setAttribute("fill", "transparent");
-  bolt.appendChild(path);
-
-  document.body.appendChild(bolt);
-
-  // Animate flash
-  bolt.animate([
-    { opacity: 0 },
-    { opacity: 1 },
-    { opacity: 0.2 },
-    { opacity: 1 },
-    { opacity: 0 }
-  ], {
-    duration: 600,
-    easing: "ease-in-out"
-  });
-
-  // Remove bolt after animation
-  setTimeout(() => bolt.remove(), 600);
-
-  if (Math.random() < 0.5) { // 50% chance for each bolt
-  setTimeout(playThunder, 75 + Math.random() * 50); // small delay for realism
-}
-
-
-}
-
-function playThunder() {
-  const thunder = new Audio("thunder.mp3"); // create a new instance
-  thunder.volume = 0.15 + Math.random() * 0.1; // subtle randomness
-  thunder.play();
-}
-
-  
-  function triggerFlash() {
-  const flashes = Math.floor(Math.random() * 6) + 1; // 1–3 bolts per flash
-  for (let i = 0; i < flashes; i++) {
-    setTimeout(() => {
-      createBolt();
-    }, i * 100); // small offset for realism
-  }
-}
-
-
-
+    // Snow
     function createSnowflake() {
       const flake = document.createElement("div");
       flake.classList.add("snowflake");
-  
       flake.style.left = Math.random() * 100 + "vw";
       flake.style.animationDuration = 18 + Math.random() * 12 + "s";
-      flake.style.opacity = Math.random();
-  
+      flake.style.opacity = 0.4 + Math.random() * 0.4;
       snow.appendChild(flake);
-  
-      // Remove when finished
-      setTimeout(() => {
-        flake.remove();
-      }, 24000);
+      setTimeout(() => flake.remove(), 24000);
+    }
+
+    // Lightning & thunder
+    function startEffects() {
+      lightningStarted = true;
+      snowInterval = setInterval(createSnowflake, 25);
+      triggerFlash();
+      lightningInterval = setInterval(triggerFlash, 7000);
+    }
+
+    function triggerFlash() {
+      const flashes = Math.floor(Math.random() * 6) + 1;
+      for (let i = 0; i < flashes; i++) {
+        setTimeout(() => createBolt(), i * 100);
+      }
+    }
+
+    function createBolt() {
+      const boltHeight = 500 + Math.random() * 150;
+      const boltWidth = 40;
+
+      const bolt = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      bolt.setAttribute("width", boltWidth);
+      bolt.setAttribute("height", boltHeight);
+      bolt.style.position = "fixed";
+      bolt.style.pointerEvents = "none";
+      bolt.style.top = (Math.random() * 45 + 5) + "vh";
+      bolt.style.left = (Math.random() * 80 + 10) + "vw";
+      bolt.style.zIndex = "0";
+      bolt.style.opacity = "0";
+      bolt.style.transform = `rotate(${Math.random() * 40 - 20}deg)`;
+
+      const step = boltHeight / 5;
+      const pathD = `M${boltWidth/2} 0 L${boltWidth/4} ${step} L${boltWidth*3/4} ${step*2} L${boltWidth/4} ${step*3} L${boltWidth*3/4} ${step*4} L${boltWidth/2} ${boltHeight}`;
+      const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      path.setAttribute("d", pathD);
+      path.setAttribute("stroke", "red");
+      path.setAttribute("stroke-width", "3");
+      path.setAttribute("fill", "transparent");
+      bolt.appendChild(path);
+
+      document.body.appendChild(bolt);
+
+      bolt.animate([
+        { opacity: 0 },
+        { opacity: 1 },
+        { opacity: 0.2 },
+        { opacity: 1 },
+        { opacity: 0 }
+      ], { duration: 600, easing: "ease-in-out" });
+
+      setTimeout(() => bolt.remove(), 600);
+
+      if (Math.random() < 0.5) setTimeout(playThunder, 75 + Math.random() * 50);
+    }
+
+    function playThunder() {
+      const thunder = new Audio("thunder.mp3");
+      thunder.volume = 0.15 + Math.random() * 0.1;
+      thunder.play();
     }
   </script>
-  
 </body>
 </html>
