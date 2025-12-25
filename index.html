@@ -5,6 +5,19 @@
   <title>Christmas Present For Brae 🎄</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
+
+    #flashOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(255, 0, 0, 0.35);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
     /* Bolt styling */
     .bolt {
       position: fixed;
@@ -154,6 +167,7 @@
   </style>
 </head>
 <body>
+  <div id="flashOverlay"></div>
   <audio id="bgMusic" loop>
     <source src="music.mp3" type="audio/mpeg">
   </audio>
@@ -257,8 +271,10 @@
     }
 
     function triggerFlash() {
+      
       const flashes = Math.floor(Math.random() * 6) + 1;
       for (let i = 0; i < flashes; i++) {
+        flashBackground();
         setTimeout(() => createBolt(), i * 100);
       }
     }
@@ -307,6 +323,16 @@
       thunder.volume = 0.15 + Math.random() * 0.1;
       thunder.play();
     }
+
+    function flashBackground() {
+  const flash = document.getElementById("flashOverlay");
+  flash.style.opacity = "1";
+
+  setTimeout(() => {
+    flash.style.opacity = "0";
+  }, 120);
+}
+
   </script>
 </body>
 </html>
