@@ -106,6 +106,15 @@
       margin: 20px auto;
       display: block;
     }
+    .photo2 {
+      width: 100%;
+      max-width: 150px;
+      height: 240px;        /* ⬅️ forces crop */
+      object-fit: cover;   /* ⬅️ prevents stretching */
+      border-radius: 14px;
+      margin: 0px auto;
+      display: block;
+    }
 
     #snow {
       position: fixed;
@@ -156,6 +165,7 @@
 
   <div class="card" id="step1">
     <h1>Merry Christmas, Brae!!! 🎄</h1>
+    <img src="dogchristmas.jpg" alt="Pibble Christmas" class="photo2">
     <p>
       I wanted to get you a present this year but couldn't think of what to get you<br><br>
       So I thought of something you and I have in common
@@ -183,15 +193,12 @@
   </div>
 
   <div class="card hidden" id="step4">
-    <h1>I would like you to go with me.</h1>
+    <h1>I would love it if you'd to go with me.</h1>
     <p>
-      <br>
-      I was hoping you’d go with me 
     </p>
-    <img src="no-way.png" alt="Screenshot of Tickets" class="photo">
+    <img src="no-way.png" alt="No Way Meme Cat" class="photo">
     <p style="margin-top: 20px; font-size: 0.95em; opacity: 0.85;">
-      If not, that's totally fine - just thought it'd be fun <br>
-      to see it in theaters together
+      We'd just have to avoid spoilers for 24 hours😏
     </p>
     <button onclick="nextStep()">Sounds Fun!😎</button>
   </div>
