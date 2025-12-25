@@ -11,10 +11,18 @@
   position: fixed;
   width: 90px;
   opacity: 0.12;
-  pointer-events: none;
+  pointer-events: auto; /* 👈 allow clicking */
+  cursor: pointer;
   z-index: 0;
   filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.4));
+  transition: transform 0.2s ease, opacity 0.2s ease;
 }
+
+.demogorgon.pop {
+  transform: scale(1.8);
+  opacity: 0;
+}
+
 
 
     #flashOverlay {
@@ -350,25 +358,42 @@ const demogorgons = [];
 function spawnDemogorgons() {
   for (let i = 0; i < demoCount; i++) {
     const img = document.createElement("img");
-    img.src = "demohead.png"; // <-- your image
+    img.src = "demohead.png";
     img.className = "demogorgon";
 
     const size = 70 + Math.random() * 50;
     img.style.width = size + "px";
 
-    const x = Math.random() * (window.innerWidth - size);
-    const y = Math.random() * (window.innerHeight - size);
+    let x = Math.random() * (window.innerWidth - size);
+    let y = Math.random() * (window.innerHeight - size);
 
-    const dx = (Math.random() * 0.6 + 0.2) * (Math.random() < 0.5 ? -1 : 1);
-    const dy = (Math.random() * 0.6 + 0.2) * (Math.random() < 0.5 ? -1 : 1);
+    let dx = (Math.random() * 0.6 + 0.2) * (Math.random() < 0.5 ? -1 : 1);
+    let dy = (Math.random() * 0.6 + 0.2) * (Math.random() < 0.5 ? -1 : 1);
+
+    img.addEventListener("click", () => {
+  img.classList.add("pop");
+
+  setTimeout(() => {
+    img.style.opacity = "0";
+  }, 200);
+
+  setTimeout(() => {
+    img.classList.remove("pop");
+    img.style.opacity = "0.12";
+
+    x = Math.random() * (window.innerWidth - size);
+    y = Math.random() * (window.innerHeight - size);
+  }, 4000); // ⬅️ respawn after 4 seconds
+});
+
 
     document.body.appendChild(img);
-
     demogorgons.push({ img, x, y, dx, dy, size });
   }
 
   requestAnimationFrame(moveDemogorgons);
 }
+
 
 function moveDemogorgons() {
   demogorgons.forEach(d => {
